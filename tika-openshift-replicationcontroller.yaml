@@ -1,0 +1,53 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployment-config.name: tika-openshift-git
+      openshift.io/deployment.replicas: "1"
+      app: tika-openshift-git
+      app.kubernetes.io/component: tika-openshift-git
+      app.kubernetes.io/instance: tika-openshift-git
+      app.kubernetes.io/part-of: tika-openshift-git-app
+      openshift.io/deployment-config.name: tika-openshift-git
+      manager: openshift-controller-manager
+    name: tika-openshift-git-1
+    namespace: tika
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: tika-openshift-git
+  spec:
+    replicas: 1
+    selector:
+      app: tika-openshift-git
+      deployment: tika-openshift-git-1
+      deploymentconfig: tika-openshift-git
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: tika-openshift-git
+          openshift.io/deployment.name: tika-openshift-git-1
+        creationTimestamp: null
+        labels:
+          app: tika-openshift-git
+          deployment: tika-openshift-git-1
+          deploymentconfig: tika-openshift-git
+      spec:
+        containers:
+        - image: apache/tika:latest 
+          imagePullPolicy: Always
+          name: tika-openshift-git
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+kind: List

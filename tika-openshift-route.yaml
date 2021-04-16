@@ -1,0 +1,34 @@
+apiVersion: v1
+items:
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    labels:
+      app: tika-openshift-git
+      app.kubernetes.io/component: tika-openshift-git
+      app.kubernetes.io/instance: tika-openshift-git
+      app.kubernetes.io/part-of: tika-openshift-git-app
+      manager: openshift-router
+      operation: Update
+    name: tika
+    namespace: tika
+  spec:
+    host: tika.apps.example.com 
+    port:
+      targetPort: 9998-tcp
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: tika-openshift-git
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      host: tika.apps.example.com
+      routerCanonicalHostname: apps.example.com
+      routerName: default
+      wildcardPolicy: None
+kind: List

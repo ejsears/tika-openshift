@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: tika-openshift-git
+    app.kubernetes.io/component: tika-openshift-git
+    app.kubernetes.io/instance: tika-openshift-git
+    app.kubernetes.io/part-of: tika-openshift-git-app
+  name: tika-openshift-git
+  namespace: tika
+spec:
+  ports:
+  - name: 9998-tcp
+    port: 9998
+    protocol: TCP
+    targetPort: 9998
+  selector:
+    app: tika-openshift-git
+    deploymentconfig: tika-openshift-git
+  sessionAffinity: None
+  type: ClusterIP
